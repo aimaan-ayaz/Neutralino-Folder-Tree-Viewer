@@ -1,0 +1,106 @@
+body {
+    font-family: Segoe UI, Arial, sans-serif;
+    background: #0c0c0c;
+    color: #e6edf3;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 10px;
+}
+
+h1 {
+    font-size: 56px;
+    margin-bottom: 40px;
+}
+
+#container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+input {
+    padding: 8px;
+    width: 350px;
+    background: #000000;
+    border: 1px solid #9ea1a3;
+    border-radius: 6px;
+    color: white;
+}
+
+button {
+    padding: 8px 14px;
+    margin-left: 10px;
+    background: #000f7e;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #001df6;
+}
+
+#tree {
+    text-align: left;
+    font-size: 20px;
+}
+
+.folder,
+.file {
+    padding: 4px 8px;
+    border-radius: 5px;
+    transition: background 0.2s ease;
+}
+
+.folder {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.folder:hover,
+.file:hover {
+    background: #21262d;
+}
+
+.folder,
+.file {
+    position: relative;
+    padding-left: 20px;
+}
+
+.folder:hover,
+.file:hover {
+    background: #1f2937;
+}
+
+
+.folder::before,
+.file::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #555;
+}
+
+.folder::after, .file::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 12px;
+    width: 12px;
+    height: 1px;
+    background: #555;
+}
+
+.tree-children {
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
