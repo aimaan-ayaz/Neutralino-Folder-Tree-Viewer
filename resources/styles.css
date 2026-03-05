@@ -48,6 +48,7 @@ button:hover {
 #tree {
     text-align: left;
     font-size: 20px;
+    min-width:300px;
 }
 
 .folder,
@@ -55,6 +56,36 @@ button:hover {
     padding: 4px 8px;
     border-radius: 5px;
     transition: background 0.2s ease;
+}
+
+#layout{
+    display:flex;
+    gap:40px;
+}
+
+#info{
+    background: linear-gradient(145deg,#1a2230,#121821);
+    padding:20px;
+    border-radius:10px;
+    width:260px;
+    border:1px solid rgba(255,255,255,0.06);
+    box-shadow:0 6px 18px rgba(0,0,0,0.45);
+}
+
+#info h3{
+    margin-top:0;
+    margin-bottom:12px;
+    font-size:18px;
+    color:#e6edf3;
+    letter-spacing:0.3px;
+}
+
+#info h3{
+    margin-top:0;
+    margin-bottom:12px;
+    font-size:18px;
+    color:#e6edf3;
+    letter-spacing:0.3px;
 }
 
 .folder {

@@ -56,21 +56,32 @@ async function buildTree(path, parent) {
 
     await buildTree(newPath, container);
 
-    element.addEventListener("click", () => {
+    element.addEventListener("click", async () => {
 
-        if (container.style.display === "none") {
+    if (container.style.display === "none") {
 
-            container.style.display = "block";
-            arrow.textContent = "▼ ";
+        container.style.display = "block";
+        arrow.textContent = "▼ ";
 
-        } else {
+    } else {
 
-            container.style.display = "none";
-            arrow.textContent = "▶ ";
+        container.style.display = "none";
+        arrow.textContent = "▶ ";
 
-        }
+    }
 
-    });
+    const info = document.getElementById("folderInfo");
+
+    const stats = await analyzeFolder(newPath);
+
+    info.innerHTML = `
+    <b>Files:</b>${stats.files}<br>
+    Subfolders: ${stats.folders}<br>
+    Total Size: ${(stats.totalSize/1024/1024).toFixed(2)} MB<br>
+    Largest File: ${stats.largestFile}
+    `;
+
+});
 
 }
 
@@ -97,6 +108,53 @@ async function buildTree(path, parent) {
 
 }
     }
+}
+
+async function analyzeFolder(path){
+
+    let files = 0;
+    let folders = 0;
+    let totalSize = 0;
+    let largestFile = "";
+    let largestSize = 0;
+
+    const items = await Neutralino.filesystem.readDirectory(path);
+
+    for(let item of items){
+
+        const fullPath = path + "/" + item.entry;
+
+        if(item.type === "DIRECTORY"){
+            folders++;
+
+            const sub = await analyzeFolder(fullPath);
+
+            files += sub.files;
+            folders += sub.folders;
+            totalSize += sub.totalSize;
+
+            if(sub.largestSize > largestSize){
+                largestSize = sub.largestSize;
+                largestFile = sub.largestFile;
+            }
+
+        }
+        else{
+
+            files++;
+
+            const stats = await Neutralino.filesystem.getStats(fullPath);
+
+            totalSize += stats.size;
+
+            if(stats.size > largestSize){
+                largestSize = stats.size;
+                largestFile = item.entry;
+            }
+        }
+    }
+
+    return {files, folders, totalSize, largestFile, largestSize};
 }
 
 Neutralino.events.on("windowClose", () => {
